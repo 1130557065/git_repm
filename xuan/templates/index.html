@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>云梦轩逸--享我所云</title>
+    <link rel="icon" href="/static/image/logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/sweetalert.css">
+</head>
+<body>
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <div class="col-md-3 navbar">
+        <div class="float-left">
+            <a class="navbar-brand" href="#">云梦轩逸-享我所云</a>
+            <img src="/static/image/logo.jpg" style="height: 50px;" class="rounded-circle img-fluid" alt="">
+        </div>
+        <button class="navbar-toggler float-right" type="button" data-toggle="collapse"
+                data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse col-md-4" id="collapsibleNavbar">
+        <ul class="navbar-nav justify-content-center">
+            <li class="nav-item">
+                <a href="#" id="lia" class="nav-link text-capitalize">linux</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" id="lia" class="nav-link text-capitalize">Shell</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" id="lia" class="nav-link text-capitalize">Database</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" id="lia" class="nav-link text-capitalize">Python</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" id="lia" class="nav-link text-capitalize">PHP</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-3 search">
+        <form class="form-inline mx-auto">
+            <input class="d-line form-control col-9" type="search" placeholder="请输入搜索内容" aria-label="Search">
+            <button class="btn btn-outline-success float-right col-3" type="submit">搜索</button>
+        </form>
+    </div>
+    <div class="col-md-2 clearfix">
+        <div class="float-left">
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.user.username %}
+                    <li class="dropdown">
+                        <a href="#" class="nav-link" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false">个人中心<span class="caret"></span></a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li><a style="color: white;" href="#">设置</a></li>
+                            <li><a style="color: white;" href="/logout/">注销</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link"
+                                            href="/reg/">注册</a></li>
+                    <li class="nav-item"><a class="nav-link px-3"
+                                            href="/login/">登录</a></li>
+                {% endif %}
+            </ul>
+
+        </div>
+        <div class="float-right">
+            <img class="rounded-circle" src="/static/image/linux.jpg" alt="">
+        </div>
+    </div>
+</nav>
+<!-- 正文内容 -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- 文章列表 -->
+        <div class="col-md-8 col-sm-12">
+
+            <ul class="list-group ">
+                {% for article in article_list %}
+                    <li class="list-group-item">
+                        <a class="nav-link" id="link2" href="#"><h4 class="card-title">{{ article.title }}</h4></a>
+                        <p class="card-text">{{ article.desc }}</p>
+                        <span><i class="fa fa-calendar">{{ article.create_time|date }}</i></span>
+                        <span><i class="fa fa-eye">{{ article.comment_count }}</i></span>
+                        <span><i class="fa fa-heart">{{ article.up_count }}</i></span>
+                    </li>
+                {% endfor %}
+            </ul>
+                <!--
+                <ul class="pagination mx-auto">
+                    <li class="page-item">
+                        <a class="page-link" href="#">上一页</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link " href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">下一页</a>
+                    </li>
+                    -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {{ page_html|safe }}
+                    </ul>
+                </nav>
+                </ul>
+        </div>
+
+        <!-- 个人显示列表 -->
+        <div class="col-md-4 col-sm-12">
+            <!-- 个人中心 -->
+            <div class="card">
+                <div class="card-header text-center">
+                    <img class="rounded-circle" id="head" src="/static/image/linux.jpg" alt="">
+                    <h5 class="card-title text-center pt-2">
+                        {% if request.user.username %}
+                            {{ request.user.username }}
+                        {% else %}
+                            未登录 游客
+                        {% endif %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title">人生格言：</h6>
+                    <p class="card-text text-center">码到攻城</p>
+                    <span class="float-left">闻机起早保运维</span>
+                    <span class="float-right">废寝忘食编程序</span>
+                </div>
+                <div class="card-footer">
+                    <h6 class="card-title">联系我</h6>
+                    <p class="card-text">个人电话：131******44&nbsp;&nbsp;</p>
+                    <p class="card-text">邮箱：131****3244@163.com&nbsp;&nbsp;</p>
+                </div>
+            </div>
+            <!-- 标签栏 -->
+            <div class="card">
+                <h6 class="card-header">标签</h6>
+                <div class="card-body">
+                    <a href="#" class="card-link">linux</a>
+                    <a href="#" class="card-link">Shell</a>
+                    <a href="#" class="card-link">MySQL</a>
+                    <a href="#" class="card-link">LAMP</a>
+                </div>
+            </div>
+
+            <div class="card c_1">
+                <h6 class="card-header">最新热门</h6>
+                <ul class="list-group ">
+                    <li class="list-group-item text-truncate"><a href="" title="教大家在如何Centos7系统中安装JDK、Tomcat、Mysql"
+                                                                 class="float-left">教大家在如何Centos7系统中安装JDK、Tomcat、Mysql</a>
+                        <span class="float-right">555</span></li>
+                    <li class="list-group-item text-truncate"><a href="" title="MySQL因不能创建 PID 导致无法启动的解决办法"
+                                                                 class="float-left">MySQL因不能创建 PID 导致无法启动的解决办法</a>
+                        <span class="float-right">777</span></li>
+                    <li class="list-group-item text-truncate"><a href="" title="Nginx 架构" class="float-left">Nginx
+                        架构</a>
+                        <span class="float-right">666</span></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h6 class="card-header">友情链接</h6>
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="" class="card-link">happysee</a></li>
+                    <li class="list-group-item"><a href="" class="card-link">豆丁网</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- 分页 -->
+
+<!-- footer -->
+<footer class="footer">
+    <div class="container mt-4 pb-2">
+        <div class="row text-center">
+            <div class="col-12 col-md-12 mx-auto">
+                <p>Copyright @2018 云梦轩逸--享我所云|开源协议|免责声明</p>
+                <p class="gabeian"> 粤公网安备 44170202000131号</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+<script src="/static/js/jquery-3.3.1.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/popper.min.js"></script>
+<script src="/static/js/sweetalert.js"></script>
+<script src="/static/js/love.js"></script>
+</html>

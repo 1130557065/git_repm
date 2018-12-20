@@ -1,0 +1,10 @@
+#avatar-img{
+	width: 70px;
+	height:70px;
+}
+.has-error{
+	color: red;
+}
+.form-group{
+	margin-top: 0px;
+}
